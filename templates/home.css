@@ -1,0 +1,16 @@
+body{
+    font-family: 'Sans', 'Verdana';
+}
+
+td{
+    vertical-align:top;
+}
+
+
+td.even{
+    background-color: lightgrey;
+}
+
+table{
+    width: 100%;
+}
