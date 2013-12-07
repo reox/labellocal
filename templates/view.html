@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>Local Label Config Tool</title>
+</head>
+<body>
+<h1>Local Label Config Tool</h1>
+<a href="/">&lt;--Back</a>
+<h2>$name</h2>
+
+Since: $since<br>
+
+<table>
+<tr>
+    <th>#</th>
+    <th>Items</th>
+</tr>
+#for $i, $row in enumerate($item_list)
+<tr>
+    <td>$i</td>
+    <td>$row</td>
+</tr>
+#end for
+</table>
+
+</body>
+</html>
