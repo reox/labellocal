@@ -1,0 +1,42 @@
+body{
+    background-color:grey;
+    font-size: 10pt;
+    font-family: 'Sans', 'Verdana';
+}
+
+.wrapper {
+    top: 0px;
+    left:0px;
+    position:absolute;
+    padding:2mm;
+    width: 62mm;
+    background-color:white;
+}
+
+h1{
+    font-size:16pt;
+    font-weight: bold;
+    display:inline;
+    width:60pt;
+    padding-right: 12pt;
+}
+
+h2{
+    font-size: 14pt;
+    font-weight: bold;
+    display: inline;
+}
+
+table{
+    border-top: 1px solid black;
+    width: 100%;
+
+}
+
+td {
+    width: 50%;
+}
+
+table, td, tr{
+    font-size: 10pt;
+}

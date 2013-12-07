@@ -1,6 +1,7 @@
 from bottle import *
 import shelve
 from Cheetah.Template import Template
+import math
 
 db = shelve.open('labeldatabase.shelve')
 
@@ -44,10 +45,20 @@ def printer(id):
     data = db[id]
     t.id = id
     t.name = data['name']
-    t.item_list = data['items']
+    items = data['items']
+    items+=['']
+    n = int(math.floor(len(items)/2.0))
+    item_pairs = [(k, items[n+m]) for m,k in enumerate(items[:n])]
+
+    t.item_list = item_pairs
     t.since = data['since']
 
     return str(t)
+
+@get('/print.css')
+def stylesheet():
+    with open('templates/print.css', 'r') as f:
+        return f.read()
 
 @post('/new')
 def newlabel():
