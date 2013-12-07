@@ -7,10 +7,19 @@ td{
 }
 
 
-td.even{
-    background-color: lightgrey;
-}
+
 
 table{
     width: 100%;
+}
+
+tr.even td{
+    background-color: lightblue;
+    border-bottom: 2px solid black;
+}
+tr.even td table td.even, tr.even td table td{
+    border-bottom: none;
+}
+td.even{
+    background-color: lightgrey;
 }
