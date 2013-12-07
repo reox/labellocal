@@ -9,24 +9,6 @@ db = shelve.open('labeldatabase.shelve')
 def home():
     t = Template(file='templates/home.html')
     t.msg = request.get('msg')
-    t.current = "<table>"
-    for i, v in db.items():
-        t.current += '<tr>'
-        t.current += '<td>%s</td>' %i
-        t.current += '<td>%s</td>' %v['name']
-        t.current += '<td>%s Items</td>' %len(v['items'])
-        t.current += '<td>%s</td>' %v['since']
-        t.current += '<td><a href="/view/%s">Show Content</a> | <a href="/delete/%s">Delete Box</a> | <a target="_blank" href="/print/%s">Print</a></td>' %(i,i,i)
-        t.current += '</tr>'
-
-    t.current += '</table>'
-
-    return str(t)
-
-@get('/content')
-def home():
-    t = Template(file='templates/home.html')
-    t.msg = request.get('msg')
     t.current = "<table><tr><th>#</th><th>Name</th><th>Item</th><th>Since</th><th>Options</th></tr>"
     for i, v in db.items():
         t.current += '<tr>'
