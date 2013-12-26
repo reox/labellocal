@@ -19,8 +19,8 @@ def home():
             t.current += '<tr><td class="%s">%s</td></tr>' %('even' if n%2==0 else 'odd', item)
         t.current += '</table></td>'
         t.current += '<td>%s</td>' %v['since']
-        t.current += '<td>%s</td>' %v['since']
-        t.current += '<td><a href="/view/%s">Show Content</a> | <a href="/delete/%s">Delete Box</a> | <a target="_blank" href="/print/%s">Print</a></td>' %(i,i,i)
+        t.current += '<td>%s</td>' %v['place']
+        t.current += '<td><a href="/view/%s">Show Content</a> | <a href="/delete/%s">Delete Box</a> | <a target="_blank" href="/print/%s">Print</a> | <a href="/edit/%s">Edit Box</a></td>' %(i,i,i,i)
         t.current += '</tr>'
 
     t.current += '</table>'
@@ -38,10 +38,18 @@ def view(id):
 
     return str(t)
 
-# TODO EDIT
 @get('/edit/<id>')
 def edit(id):
-    return ""
+    t = Template(file='templates/edit.html')
+    data = db[id]
+    
+    t.identifier = id
+    t.name = data['name']
+    t.content = "\n".join(x for x in data['items'])
+    t.since = data['since']
+    t.place = data['place']
+
+    return str(t)
 
 @get('/delete/<id>')
 def delete(id):
@@ -84,6 +92,19 @@ def newlabel():
     items =  [x.replace('\r', '') for x in content.split('\n') if x != '' and x != '\r']
 
     db[str(nextnumber)] = {'name': name, 'items': items, 'since': since, 'place': place}
+    redirect('/')
+
+@post('/editsave')
+def editlabelsave():
+    
+    id = request.forms.get('id')
+    name =  request.forms.get('name')
+    content =  request.forms.get('content')
+    since =  request.forms.get('since')
+    place = request.forms.get('place')
+    items =  [x.replace('\r', '') for x in content.split('\n') if x != '' and x != '\r']
+
+    db[id] = {'name': name, 'items': items, 'since': since, 'place': place}
     redirect('/')
 
 
