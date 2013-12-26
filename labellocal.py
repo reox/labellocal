@@ -9,7 +9,7 @@ db = shelve.open('labeldatabase.shelve')
 def home():
     t = Template(file='templates/home.html')
     t.msg = request.get('msg')
-    t.current = '<table cellpadding="0" cellspacing="0"><tr><th>#</th><th>Name</th><th>Item</th><th>Since</th><th>Options</th></tr>'
+    t.current = '<table cellpadding="0" cellspacing="0"><tr><th>#</th><th>Name</th><th>Item</th><th>Since</th><th>Place</th><th>Options</th></tr>'
     for m, (i, v) in enumerate(db.items()):
         t.current += '<tr class="%s">' %('even' if m%2==0 else 'odd')
         t.current += '<td>%s</td>' %i
@@ -18,6 +18,7 @@ def home():
         for n, item in enumerate(v['items']):
             t.current += '<tr><td class="%s">%s</td></tr>' %('even' if n%2==0 else 'odd', item)
         t.current += '</table></td>'
+        t.current += '<td>%s</td>' %v['since']
         t.current += '<td>%s</td>' %v['since']
         t.current += '<td><a href="/view/%s">Show Content</a> | <a href="/delete/%s">Delete Box</a> | <a target="_blank" href="/print/%s">Print</a></td>' %(i,i,i)
         t.current += '</tr>'
@@ -33,8 +34,14 @@ def view(id):
     t.name = data['name']
     t.item_list = data['items']
     t.since = data['since']
+    t.place = data['place']
 
     return str(t)
+
+# TODO EDIT
+@get('/edit/<id>')
+def edit(id):
+    return ""
 
 @get('/delete/<id>')
 def delete(id):
@@ -73,9 +80,10 @@ def newlabel():
     name =  request.forms.get('name')
     content =  request.forms.get('content')
     since =  request.forms.get('since')
+    place = request.forms.get('place')
     items =  [x.replace('\r', '') for x in content.split('\n') if x != '' and x != '\r']
 
-    db[str(nextnumber)] = {'name': name, 'items': items, 'since': since}
+    db[str(nextnumber)] = {'name': name, 'items': items, 'since': since, 'place': place}
     redirect('/')
 
 
